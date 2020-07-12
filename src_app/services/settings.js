@@ -1,4 +1,3 @@
-
 let db;
 const settings = {};
 
@@ -92,7 +91,6 @@ const keys = {
     OS_USERNAME: 7,
     OS_PASSWORD: 8,
 };
-
 
 module.exports = {
     use, get, set, rm, keys,
