@@ -6,6 +6,7 @@ const settingsService = require('./services/settings');
 
 let db;
 
+const printerListener = require('./listeners/printer');
 const noteListener = require('./listeners/note');
 
 function listen() {
@@ -13,6 +14,12 @@ function listen() {
     //     event.reply('fetch-settings-reply', await db.all('SELECT * FROM setting'));
     // });
 
+    // printers
+    ipcMain.on('printers-list', async (event) => {
+        event.reply('printers-list-reply', await printerListener.list());
+    });
+
+    // notes
     ipcMain.on('note-list-drawns', async (event) => {
         event.reply('note-list-drawns-reply', await noteListener.list());
     });
@@ -55,6 +62,7 @@ function listen() {
     await sqlite.migrate();
 
     settingsService.use(db);
+    printerListener.use(db);
     noteListener.use(db);
 })();
 

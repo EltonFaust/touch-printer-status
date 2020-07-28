@@ -7,6 +7,10 @@ export default {
         Vue.set(state, 'isLoading', isLoading);
     },
 
+    [MUTATIONS.SET_PRINTERS]: (state, printers) => {
+        state.printers = printers;
+    },
+
     [MUTATIONS.SET_NOTES]: (state, notes) => {
         state.notes = notes;
     },

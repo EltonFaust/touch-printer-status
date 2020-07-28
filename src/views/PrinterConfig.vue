@@ -1,17 +1,17 @@
 <template>
-    <div class="cameras">
+    <div class="printer-config">
         <nav-actions></nav-actions>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    .cameras {
+    .printer-config {
     }
 </style>
 
 <script>
 export default {
-    name: 'cameras',
+    name: 'printer-config',
     // data() {
     //     return {
     //         notes: [],

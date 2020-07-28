@@ -2,6 +2,16 @@
 import { ACTIONS, ACTION_MODES, MUTATIONS } from './_types';
 
 export default {
+    // ------------ PRINTERS ------------
+    [ACTIONS.FETCH_PRINTERS]: ({ commit }) => new Promise((resolve) => {
+        window.ipcRenderer.once('printers-list-reply', (event, printers) => {
+            commit(MUTATIONS.SET_PRINTERS, printers);
+            resolve();
+        });
+
+        window.ipcRenderer.send('printers-list');
+    }),
+
     // ------------ NOTES ------------
     [ACTIONS.FETCH_NOTES]: ({ commit }) => new Promise((resolve) => {
         window.ipcRenderer.once('note-list-drawns-reply', (event, notes) => {

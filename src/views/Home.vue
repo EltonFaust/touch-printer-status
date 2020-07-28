@@ -2,7 +2,7 @@
     <div class="home">
         <b-container fluid class="actions">
             <b-row v-for="(group, gidx) of actionGroups" :key="gidx">
-                <b-col xs="4" v-for="(item, iidx) of group" :key="iidx">
+                <b-col v-for="(item, iidx) of group" :key="iidx">
                     <router-link v-if="item !== null" :to="item.to" class="border rounded highlight">
                         <div class="action-label">
                             <div class="item-icon"><i class="material-icons">{{ item.icon }}</i></div>
@@ -12,17 +12,30 @@
                 </b-col>
             </b-row>
         </b-container>
-        <!-- <div class="settings-button">
-            <router-link tag="div" class="click-area" :to="{ name: 'settings' }"></router-link>
-            <router-link tag="div" class="click-button" :to="{ name: 'settings' }"><i class="material-icons">settings</i></router-link>
-        </div> -->
-        <div class="close-button">
-            <div class="click-area" @click="close"></div>
-            <div class="click-button" @click="close"><i class="material-icons">close</i></div>
-        </div>
-        <b-modal id="modal-close" title="Close app" @ok="confirmClose">
-            <p class="my-4">Do you want to close the app?</p>
-        </b-modal>
+        <b-container class="bottom-actions">
+            <div class="edit-button" v-if="$store.state.printers.length > 0">
+                <div class="click-area" @click="edit"></div>
+                <div class="click-button" @click="edit"><i class="material-icons">{{ editing ? 'check' : 'edit' }}</i></div>
+            </div>
+            <div class="center-actions">
+                <div class="action-buttons">
+                    <router-link :to="{ name: 'notes' }" class="btn btn-warning">
+                        <i class="material-icons">notes</i> Notes
+                    </router-link>
+                    <span style="padding: 0 5px;"></span>
+                    <router-link :to="{ name: 'note-drawn' }" class="btn btn-warning">
+                        <i class="material-icons">note_add</i> Add note
+                    </router-link>
+                </div>
+            </div>
+            <div class="close-button">
+                <div class="click-area" @click="close"></div>
+                <div class="click-button" @click="close"><i class="material-icons">close</i></div>
+            </div>
+            <b-modal id="modal-close" title="Close app" @ok="confirmClose">
+                <p class="my-4">Do you want to close the app?</p>
+            </b-modal>
+        </b-container>
     </div>
 </template>
 
@@ -64,7 +77,22 @@
             }
         }
 
-        .settings-button {
+
+        .bottom-actions {
+            height: 60px;
+
+            .center-actions {
+                display: flex;
+                height: 100%;
+                text-align: center;
+                align-items: center;
+
+                .action-buttons {
+                    flex: 1;
+                }
+            }
+        }
+        .edit-button {
             left: -45px;
 
             .click-button {
@@ -81,7 +109,7 @@
             }
         }
 
-        .settings-button,
+        .edit-button,
         .close-button {
             padding: 5px;
             position: fixed;
@@ -106,7 +134,7 @@
 </style>
 
 <script>
-// import { ACTIONS } from '@/store/_types';
+import { ACTIONS } from '@/store/_types';
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue';
 // import ipcRenderer from 'electron';
@@ -115,25 +143,24 @@ export default {
     name: 'home',
     data: () => (
         {
-            actions: [
-                { to: { name: 'note-drawn' }, label: 'Note', icon: 'note_add' },
-                { to: { name: 'notes' }, label: 'Notes', icon: 'notes' },
-                // { to: { name: 'media' }, label: 'Media', icon: 'ondemand_video' },
-                // { to: { name: 'cameras' }, label: 'Cameras', icon: 'videocam' },
-                null,
-                null,
-                // { to: { name: 'note-drawn' }, label: 'Note', icon: 'note_add' },
-                // { to: { name: 'note-drawn' }, label: 'Note', icon: 'note_add' },
-                // { to: { name: 'note-drawn' }, label: 'Note', icon: 'note_add' },
-            ],
+            editing: false,
         }
     ),
     computed: {
         actionGroups() {
             const groups = [];
+            const actions = this.$store.state.printers.slice(0);
 
-            this.actions.forEach((item, idx) => {
-                if (idx % 3 === 0) {
+            if (actions.length < 4) {
+                if (this.editing || actions.length === 0) {
+                    actions.push({ to: { name: 'printer-add' }, label: 'Add printer', icon: 'add' });
+                }
+            }
+
+            actions.push(...(new Array(4 - actions.length).fill(null)));
+
+            actions.forEach((item, idx) => {
+                if (idx % 2 === 0) {
                     groups.push([]);
                 }
 
@@ -144,6 +171,9 @@ export default {
         },
     },
     methods: {
+        edit() {
+            this.editing = !this.editing;
+        },
         close() {
             this.$bvModal.show('modal-close');
         },
@@ -170,5 +200,9 @@ export default {
     //         ],
     //     );
     // },
+
+    asyncData({ store }) {
+        return store.dispatch(ACTIONS.FETCH_PRINTERS);
+    },
 };
 </script>

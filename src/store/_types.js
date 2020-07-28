@@ -5,6 +5,8 @@ export const ACTION_MODES = {
 };
 
 export const ACTIONS = {
+    FETCH_PRINTERS: 'FETCH_PRINTERS',
+
     FETCH_NOTES: 'FETCH_NOTES',
     SAVE_NOTE: 'SAVE_NOTE',
     DUPLICATE_NOTE: 'DUPLICATE_NOTE',
@@ -14,6 +16,8 @@ export const ACTIONS = {
 
 export const MUTATIONS = {
     SET_AS_LOADING: 'SET_AS_LOADING',
+
+    SET_PRINTERS: 'SET_PRINTERS',
 
     SET_NOTES: 'SET_NOTES',
     ADD_NOTE: 'ADD_NOTE',

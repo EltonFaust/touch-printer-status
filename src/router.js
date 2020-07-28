@@ -12,6 +12,21 @@ export default new Router({
             component: Home,
         },
         {
+            path: '/printer/add',
+            name: 'printer-add',
+            component: () => import(/* webpackChunkName: "page-printer-config" */ './views/PrinterConfig.vue'),
+        },
+        {
+            path: '/printer/edit/:id',
+            name: 'printer-edit',
+            component: () => import(/* webpackChunkName: "page-printer-config" */ './views/PrinterConfig.vue'),
+        },
+        {
+            path: '/printer/view/:id',
+            name: 'printer-view',
+            component: () => import(/* webpackChunkName: "page-printer-view" */ './views/PrinterView.vue'),
+        },
+        {
             path: '/notes',
             name: 'notes',
             component: () => import(/* webpackChunkName: "page-notes" */ './views/Notes.vue'),
@@ -25,11 +40,6 @@ export default new Router({
             path: '/notes/drawn/:id',
             name: 'note-edit-drawn',
             component: () => import(/* webpackChunkName: "page-note-drawn" */ './views/NoteDrawn.vue'),
-        },
-        {
-            path: '/cameras',
-            name: 'cameras',
-            component: () => import(/* webpackChunkName: "page-cameras" */ './views/Cameras.vue'),
         },
         // {
         //     path: '/note-drawn',
