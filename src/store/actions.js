@@ -1,4 +1,3 @@
-
 import { ACTIONS, ACTION_MODES, MUTATIONS } from './_types';
 
 export default {

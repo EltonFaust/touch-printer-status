@@ -85,7 +85,7 @@ const get = (id) => db.get('SELECT * FROM printer WHERE id = ?', id);
 module.exports = {
     use,
     list,
-    // get,
+    get,
     // save,
     // rename,
     // duplicate,

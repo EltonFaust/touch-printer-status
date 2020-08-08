@@ -1,4 +1,3 @@
-
 import { MUTATIONS } from '@/store/_types';
 
 export default {

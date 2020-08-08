@@ -45,7 +45,7 @@ sync(store, router);
 const app = new Vue({
     router,
     store,
-    render: h => h(App),
+    render: (h) => h(App),
 });
 
 router.onReady(() => {
@@ -69,13 +69,13 @@ router.onReady(() => {
             return diffed;
         });
 
-        const asyncDataHooks = activated.map(c => c.asyncData).filter(_ => _);
+        const asyncDataHooks = activated.map((c) => c.asyncData).filter((_) => _);
 
         if (!asyncDataHooks.length) {
             return next();
         }
 
-        Promise.all(asyncDataHooks.map(hook => hook({ store, route: to }))).then(next);
+        Promise.all(asyncDataHooks.map((hook) => hook({ store, route: to }))).then(next);
 
         return true;
     });

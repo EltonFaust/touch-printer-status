@@ -1,6 +1,7 @@
 const path = require('path');
 
 const { ipcMain } = require('electron');
+const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
 const settingsService = require('./services/settings');
 
@@ -58,8 +59,14 @@ function listen() {
 }
 
 (async () => {
-    db = await sqlite.open(path.resolve(__dirname, '..', 'data', 'db.sqlite'), { Promise });
-    await sqlite.migrate();
+    db = await sqlite.open(
+        {
+            filename: path.resolve(__dirname, '..', 'data', 'db.sqlite'),
+            driver: sqlite3.Database,
+        },
+    );
+
+    await db.migrate({ migrationsPath: path.resolve(__dirname, '..', 'migrations') });
 
     settingsService.use(db);
     printerListener.use(db);

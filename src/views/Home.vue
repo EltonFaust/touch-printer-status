@@ -77,7 +77,6 @@
             }
         }
 
-
         .bottom-actions {
             height: 60px;
 

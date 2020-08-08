@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 
 let db;
 

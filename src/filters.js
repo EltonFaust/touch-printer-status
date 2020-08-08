@@ -1,4 +1,3 @@
-
 export function strlimit(str, length) {
     return str.length > length ? `${str.substr(0, length - 3).trim()}...` : str;
 }

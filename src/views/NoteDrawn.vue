@@ -237,12 +237,12 @@ export default {
             this.drawn.setStrokeColor(this.colors[this.color]);
         },
         incrementSize() {
-            this.size = this.size + 1;
+            this.size += 1;
             this.drawn.setLineWidth(this.size);
         },
         decrementSize() {
             if (this.size > 1) {
-                this.size = this.size - 1;
+                this.size -= 1;
                 this.drawn.setLineWidth(this.size);
             }
         },
