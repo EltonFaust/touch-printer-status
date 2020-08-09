@@ -10,6 +10,7 @@ const use = (dbInstance) => {
 
 const list = () => db.all('SELECT * FROM printer ORDER BY id DESC');
 const get = (id) => db.get('SELECT * FROM printer WHERE id = ?', id);
+const getInUsePins = () => db.get('SELECT light_pin FROM printer').then((d) => d.map((i) => i.light_pin));
 
 // const get = async (id) => {
 //     const note = await db.get('SELECT * FROM note WHERE id = ?', id);
@@ -86,6 +87,7 @@ module.exports = {
     use,
     list,
     get,
+    getInUsePins,
     // save,
     // rename,
     // duplicate,

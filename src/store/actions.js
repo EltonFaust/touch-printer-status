@@ -10,6 +10,22 @@ export default {
 
         window.ipcRenderer.send('printers-list');
     }),
+    [ACTIONS.FETCH_PRINTER]: ({ commit }, id) => new Promise((resolve) => {
+        window.ipcRenderer.once('printer-get-reply', (event, printer) => {
+            commit(MUTATIONS.SET_PRINTER, printer);
+            resolve();
+        });
+
+        window.ipcRenderer.send('printer-get', id);
+    }),
+    [ACTIONS.FETCH_IN_USE_PINS]: ({ commit }) => new Promise((resolve) => {
+        window.ipcRenderer.once('printer-get-in-use-pins-reply', (event, pins) => {
+            commit(MUTATIONS.SET_IN_USE_PINS, pins);
+            resolve();
+        });
+
+        window.ipcRenderer.send('printer-get-in-use-pins');
+    }),
 
     // ------------ NOTES ------------
     [ACTIONS.FETCH_NOTES]: ({ commit }) => new Promise((resolve) => {

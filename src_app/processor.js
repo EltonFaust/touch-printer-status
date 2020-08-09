@@ -20,6 +20,14 @@ function listen() {
         event.reply('printers-list-reply', await printerListener.list());
     });
 
+    ipcMain.on('printer-get', async (event, id) => {
+        event.reply('printer-get-reply', await printerListener.get(id));
+    });
+
+    ipcMain.on('printer-get-in-use-pins', async (event) => {
+        event.reply('printer-get-in-use-pins-reply', await printerListener.getInUsePins());
+    });
+
     // notes
     ipcMain.on('note-list-drawns', async (event) => {
         event.reply('note-list-drawns-reply', await noteListener.list());
