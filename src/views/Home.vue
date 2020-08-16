@@ -3,7 +3,7 @@
         <b-container fluid class="actions">
             <b-row v-for="(group, gidx) of actionGroups" :key="gidx">
                 <b-col v-for="(item, iidx) of group" :key="iidx">
-                    <router-link v-if="item !== null" :to="item.to" class="border rounded highlight">
+                    <router-link v-if="item !== null" :to="item.to" class="border rounded btn-default">
                         <div class="action-label">
                             <div class="item-icon"><i class="material-icons">{{ item.icon }}</i></div>
                             <div class="item-label">{{ item.label }}</div>
@@ -19,11 +19,11 @@
             </div>
             <div class="center-actions">
                 <div class="action-buttons">
-                    <router-link :to="{ name: 'notes' }" class="btn btn-warning">
+                    <router-link :to="{ name: 'notes' }" class="btn btn-default">
                         <i class="material-icons">notes</i> Notes
                     </router-link>
                     <span style="padding: 0 5px;"></span>
-                    <router-link :to="{ name: 'note-drawn' }" class="btn btn-warning">
+                    <router-link :to="{ name: 'note-drawn' }" class="btn btn-default">
                         <i class="material-icons">note_add</i> Add note
                     </router-link>
                 </div>
@@ -120,13 +120,13 @@
             .click-area {
                 width: 80px;
                 height: 80px;
-                background-color: $highlight-primary;
+                background-color: var(--app-color-tertiary);
                 transform: rotate(45deg);
             }
 
             .click-button {
                 position: absolute;
-                color: $highlight-secondary;
+                color: var(--app-color-quaternary);
             }
         }
     }

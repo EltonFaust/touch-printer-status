@@ -46,8 +46,12 @@
 
         .drawning-area {
             flex: 1;
+            line-height: 1;
+            font-size: 0;
 
             canvas {
+                font-size: 0;
+                line-height: 1;
                 width: 100%;
                 height: 100%;
             }
@@ -136,7 +140,7 @@ export default {
         const el = document.querySelector('.note-drawn .drawning-area');
 
         const drawnWidth = el.offsetWidth;
-        const drawnHeight = el.offsetHeight - 5;
+        const drawnHeight = el.offsetHeight;
 
         // eslint-disable-next-line new-cap
         this.drawn = new CanvasFreeDrawing.default({

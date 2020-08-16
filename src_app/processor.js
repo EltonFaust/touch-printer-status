@@ -28,6 +28,10 @@ function listen() {
         event.reply('printer-get-in-use-pins-reply', await printerListener.getInUsePins());
     });
 
+    ipcMain.on('printer-save', async (event, { id, data }) => {
+        event.reply('printer-save-reply', await printerListener.save(id, data));
+    });
+
     // notes
     ipcMain.on('note-list-drawns', async (event) => {
         event.reply('note-list-drawns-reply', await noteListener.list());
@@ -37,12 +41,12 @@ function listen() {
         event.reply('note-get-reply', await noteListener.get(id));
     });
 
-    ipcMain.on('note-drawn-save', async (event, arg) => {
-        event.reply('note-drawn-save-reply', await noteListener.save(arg.id, arg.content));
+    ipcMain.on('note-drawn-save', async (event, { id, content }) => {
+        event.reply('note-drawn-save-reply', await noteListener.save(id, content));
     });
 
-    ipcMain.on('note-rename', async (event, arg) => {
-        await noteListener.rename(arg.id, arg.title);
+    ipcMain.on('note-rename', async (event, { id, title }) => {
+        await noteListener.rename(id, title);
         event.reply('note-rename-reply');
     });
 

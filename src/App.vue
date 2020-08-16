@@ -10,6 +10,14 @@
     </div>
 </template>
 
+<style type="text/css">
+    :root {
+        --app-color-primary: #d5d5d5;
+        --app-color-secondary: #212529;
+        --app-color-tertiary: #eb9316;
+        --app-color-quaternary: #ffffff;
+    }
+</style>
 <style lang="scss" scoped>
     #app {
         > .loading {
@@ -48,48 +56,34 @@ $modal-inner-padding: .625rem;
 html, body, #app {
     height: 100%;
     user-select: none;
+    background-color: var(--app-color-primary);
+    color: var(--app-color-secondary);
 }
 
 a {
     text-decoration: none !important;
-    &, &:active {
-        color: $highlight-secondary;
-    }
+    color: var(--app-color-secondary) !important;
+}
 
-    &.highlight {
-        background-color: $highlight-primary;
-        border-color: $highlight-primary;
-    }
+.btn-default {
+    color: var(--app-color-quaternary) !important;
+    background-color: var(--app-color-tertiary) !important;
+    border-color: var(--app-color-tertiary) !important;
 
-    &.highlight-outline {
-        background-color: $highlight-secondary;
-        color: $highlight-primary;
-        border-color: $highlight-primary;
+    &.outline {
+        background-color: transparent;
     }
 }
 
-.bg-highlight {
-    background-color: $highlight-primary;
-    color: $highlight-secondary;
-}
-
-.text-highlight {
-    color: $highlight-primary;
-}
-
-.border-highlight {
-    border-color: $highlight-primary;
-}
-
-.border-highlighter {
-    border-color: darken($highlight-primary, 10%);
+form .form-group small.form-text {
+    color: var(--app-color-secondary) !important;
+    opacity: 0.5;
+    // filter: brightness(85%);
 }
 
 @if ($production) {
     #app, a {
-        &, &:hover, &:active {
-            cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=), none !important;
-        }
+        cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=), none !important;
     }
 }
 

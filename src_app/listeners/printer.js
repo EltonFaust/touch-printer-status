@@ -10,50 +10,33 @@ const use = (dbInstance) => {
 
 const list = () => db.all('SELECT * FROM printer ORDER BY id DESC');
 const get = (id) => db.get('SELECT * FROM printer WHERE id = ?', id);
-const getInUsePins = () => db.get('SELECT light_pin FROM printer').then((d) => d.map((i) => i.light_pin));
+const getInUsePins = () => db.all('SELECT light_pin FROM printer').then((d) => d.map((i) => i.light_pin));
 
-// const get = async (id) => {
-//     const note = await db.get('SELECT * FROM note WHERE id = ?', id);
-//     const fileContent = fs.readFileSync(
-//         path.resolve('.', 'data', 'note', note.path),
-//         { encoding: 'base64' },
-//     );
+const save = async (id, data) => {
+    const updated = new Date().toISOString();
+    const printer = id ? await get(id) : null;
 
-//     return { ...note, content: `data:image/png;base64,${fileContent}` };
-// };
+    const allData = data;
+    allData.updated = updated;
 
-// const save = async (id, content) => {
-//     const updated = new Date().toISOString();
+    if (printer) {
+        await db.run(
+            `UPDATE printer SET ${Object.keys(allData).map((k) => `${k} = ?`).join(', ')} WHERE id = ?`,
+            ...Object.values(allData), printer.id,
+        );
 
-//     if (!id) {
-//         const filePath = `${uuid()}.png`;
+        return printer.id;
+    }
 
-//         fs.writeFileSync(
-//             path.resolve('.', 'data', 'note', filePath),
-//             content.replace(/.*;base64,/, ''),
-//             { encoding: 'base64' },
-//         );
+    allData.created = updated;
 
-//         const { lastID } = db.run(
-//             'INSERT INTO note(title, path, created, updated) VALUES(?, ?, ?, ?)',
-//             updated.substr(0, 19).replace(/T/, ' '), filePath, updated, updated,
-//         );
+    const { lastID } = await db.run(
+        `INSERT INTO printer (${Object.keys(allData).join(', ')}) VALUES(${Object.keys(allData).map(() => '?').join(', ')})`,
+        ...Object.values(allData),
+    );
 
-//         return lastID;
-//     }
-
-//     const note = await db.get('SELECT path FROM note WHERE id = ?', id);
-
-//     fs.writeFileSync(
-//         path.resolve('.', 'data', 'note', note.path),
-//         content.replace(/.*;base64,/, ''),
-//         { encoding: 'base64' },
-//     );
-
-//     await db.run('UPDATE note SET updated = ? WHERE id = ?', updated, id);
-
-//     return id;
-// };
+    return lastID;
+};
 
 // const rename = async (id, newTitle) => db.run('UPDATE note SET title = ? WHERE id = ?', newTitle, id);
 
@@ -88,7 +71,7 @@ module.exports = {
     list,
     get,
     getInUsePins,
-    // save,
+    save,
     // rename,
     // duplicate,
     // remove,

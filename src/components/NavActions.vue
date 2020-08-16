@@ -39,10 +39,6 @@ export default {
         > .row {
             margin-right: -10px;
             margin-left: -10px;
-
-            a {
-                color: $body-color;
-            }
         }
     }
 </style>

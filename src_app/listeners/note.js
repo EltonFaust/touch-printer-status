@@ -32,7 +32,7 @@ const save = async (id, content) => {
             { encoding: 'base64' },
         );
 
-        const { lastID } = db.run(
+        const { lastID } = await db.run(
             'INSERT INTO note(title, path, created, updated) VALUES(?, ?, ?, ?)',
             updated.substr(0, 19).replace(/T/, ' '), filePath, updated, updated,
         );
