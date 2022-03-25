@@ -21,7 +21,7 @@
     "bootstrap-vue": "^2.16.0",
     "canvas-free-drawing": "^2.0.4",
     "core-js": "^3.6.5",
-    "electron": "^9.1.1",
+    "electron": "^13.6.6",
     "jquery": "^3.5.1",
     "material-design-icons-iconfont": "^5.0.1",
     "rxjs": "^6.6.0",
