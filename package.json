@@ -27,7 +27,7 @@
     "rxjs": "^6.6.0",
     "simple-keyboard": "^2.29.76",
     "sqlite": "^4.0.12",
-    "sqlite3": "^5.0.0",
+    "sqlite3": "^5.1.5",
     "uuid": "^8.3.0",
     "vue": "^2.6.11",
     "vue-dragscroll": "^2.1.0",
